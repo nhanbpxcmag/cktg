@@ -1,3 +1,4 @@
+import { Public } from './../../shared/decorators/isPublic.decorator';
 import { Args, Mutation, Resolver } from '@nestjs/graphql';
 import { CreateUserInput } from '../user/dto/user.input';
 import { LoginInput } from './../user/dto/user.input';
@@ -9,6 +10,7 @@ export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
   @Mutation(() => UserResponse, { name: 'register' })
+  @Public()
   async register(
     @Args('createUserInput')
     createUserInput: CreateUserInput,
@@ -23,6 +25,7 @@ export class AuthResolver {
   }
 
   @Mutation(() => UserResponse, { name: 'login' })
+  @Public()
   async login(
     @Args('loginInput')
     loginInput: LoginInput,

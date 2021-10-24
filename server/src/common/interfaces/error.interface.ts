@@ -1,4 +1,4 @@
-interface IErrorMessage {
+export interface IErrorMessage {
   value: string;
   property: string;
   constraints: {

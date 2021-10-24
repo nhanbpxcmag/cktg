@@ -1,3 +1,4 @@
+import { Public } from './../../shared/decorators/isPublic.decorator';
 import { LocalAuthGuard } from './../../shared/guards/local-auth.guard';
 import { Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { User } from '../user/schemas/user.schema';
@@ -8,6 +9,7 @@ import { AuthService } from './auth.service';
 export class AuthController {
   constructor(private authService: AuthService) {}
   @UseGuards(LocalAuthGuard)
+  @Public()
   @Post('auth/login')
   async login(@Request() req): Promise<UserResponse> {
     const user: User = req.user;

@@ -1,15 +1,11 @@
-import { AuthModule } from './../auth/auth.module';
-import { UserController } from './user.constroller';
-import { hashPassword } from './../../shared/utils/hash.util';
-import { MongooseModule, getConnectionToken } from '@nestjs/mongoose';
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from './schemas/user.schema';
+import { UserController } from './user.constroller';
 import { UserResolver } from './user.resolver';
 import { UserService } from './user.service';
-import config from '../../shared/config/config';
-import { Connection } from 'mongoose';
-// import * as autoIncrement from 'mongoose-auto-increment';
 
+@Global()
 @Module({
   imports: [
     MongooseModule.forFeatureAsync([

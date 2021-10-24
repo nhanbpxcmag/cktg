@@ -13,7 +13,10 @@ import config from '../../shared/config/config';
 @Injectable()
 export class UserService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
-  async create(createUserInput: CreateUserInput): Promise<User> {
+  async create(
+    createUserInput: CreateUserInput,
+    return_error = true,
+  ): Promise<User | null> {
     const { username, email, password, firstName, lastName } = createUserInput;
     const existingUser = await this.userModel
       .findOne({
@@ -38,7 +41,11 @@ export class UserService {
         ],
         error: ERROR_CONSTANT.VALIDATION_INPUT,
       };
-      throw new BadRequestException(message, ERROR_CONSTANT.VALIDATION_INPUT);
+      if (return_error) {
+        throw new BadRequestException(message, ERROR_CONSTANT.VALIDATION_INPUT);
+      } else {
+        return null;
+      }
     }
     const hash_password = await hashPassword(password, config.salt_password);
     const newUser: UserDocument = await new this.userModel({
@@ -67,6 +74,10 @@ export class UserService {
 
   async getUserById(id: string): Promise<User> {
     const user = await this.userModel.findById(id).lean().exec();
+    return plainToClass(User, user);
+  }
+  async getUserByUsername(username: string): Promise<User> {
+    const user = await this.userModel.findOne({ username }).lean().exec();
     return plainToClass(User, user);
   }
 }

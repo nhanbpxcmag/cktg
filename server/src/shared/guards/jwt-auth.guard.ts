@@ -1,3 +1,4 @@
+import { GqlExecutionContext } from '@nestjs/graphql';
 import { IS_PUBLIC_KEY } from './../../shared/decorators/isPublic.decorator';
 import {
   ExecutionContext,
@@ -20,7 +21,16 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     if (isPublic) {
       return true;
     }
+
     return super.canActivate(context);
+  }
+
+  getRequest(context: ExecutionContext) {
+    if (context.getType().toString() === 'graphql') {
+      const ctx = GqlExecutionContext.create(context);
+      return ctx.getContext().req;
+    }
+    return context.switchToHttp().getRequest();
   }
 
   handleRequest(err, user, info) {

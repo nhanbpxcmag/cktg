@@ -1,0 +1,47 @@
+{
+  "users": [
+    {
+      "lastName": "Administrator",
+      "firstName": "admin",
+      "password": "123456",
+      "email": "admin@gmail.com",
+      "username": "admin"
+    }
+  ],
+  "permissions": [
+    {
+      "code": "CREATE_REGION",
+      "name": "Create region"
+    },
+    {
+      "code": "ADMIN",
+      "name": "Administrator"
+    }
+  ],
+  "roles": [
+    {
+      "code": "ADMIN",
+      "name": "Administrator"
+    },
+    {
+      "code": "CREATE",
+      "name": "Create"
+    }
+  ],
+  "rolePermissions": [
+    {
+      "role": "ADMIN",
+      "permission": "ADMIN"
+    },
+    {
+      "role": "CREATE",
+      "permission": "CREATE_REGION"
+    }
+  ],
+  "roleUsers": [
+    {
+      "username": "admin",
+      "role": "ADMIN"
+    }
+  ]
+}

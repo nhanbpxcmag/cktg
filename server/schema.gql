@@ -19,6 +19,22 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Permission {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+}
+
+type Role {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+}
+
 type UserResponse {
   _id: ID
   createdAt: DateTime
@@ -32,13 +48,41 @@ type UserResponse {
   token: String!
 }
 
+type Region {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+}
+
+type Tournament {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+  number: Float!
+  region: Region
+}
+
 type Query {
   me: User!
+  regions: [Region!]!
+  region(_id: String!): Region!
+  tournaments: [Tournament!]
+  tournament(_id: String!): Tournament!
 }
 
 type Mutation {
   register(createUserInput: CreateUserInput!): UserResponse!
   login(loginInput: LoginInput!): UserResponse!
+  createRegion(createRegionInput: CreateRegionInput!): Region!
+  updateRegion(updateRegionInput: UpdateRegionInput!): Region!
+  deleteRegion(_id: String!): Boolean!
+  createTournament(createTournamentInput: CreateTournamentInput!): Tournament!
+  updateTournament(updateTournamentInput: UpdateTournamentInput!): Tournament!
+  deleteTournament(_id: String!): Boolean!
 }
 
 input CreateUserInput {
@@ -52,4 +96,30 @@ input CreateUserInput {
 input LoginInput {
   usernameOrEmail: String!
   password: String!
+}
+
+input CreateRegionInput {
+  code: String!
+  name: String!
+}
+
+input UpdateRegionInput {
+  _id: String!
+  code: String!
+  name: String!
+}
+
+input CreateTournamentInput {
+  name: String!
+  code: String!
+  number: Float!
+  regionId: String!
+}
+
+input UpdateTournamentInput {
+  _id: String!
+  code: String!
+  name: String!
+  number: Float!
+  regionId: String!
 }

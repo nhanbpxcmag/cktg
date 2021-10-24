@@ -1,3 +1,4 @@
+import { PermissionsGuard } from './shared/guards/permissions.guard';
 import * as dotenv from 'dotenv';
 dotenv.config();
 import config from './shared/config/config';
