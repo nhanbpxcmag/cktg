@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsNumber, Matches, Length } from 'class-validator';
-import { InputType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { IsNotEmpty, IsNumber, Max, Min } from 'class-validator';
 import { IsObjectID } from 'src/shared/decorators/class-validator.decorator';
 @InputType()
 export class CreateSeasonInput {
@@ -12,14 +12,19 @@ export class CreateSeasonInput {
   name: string;
 
   @Field()
+  description: string;
+
+  @Field()
   @IsNumber({}, { message: 'Vui lòng nhập kiểu số' })
-  @Length(4, 4, { message: 'Gồm 4 ký tự' })
+  @Min(2010, { message: 'Lớn hơn 2010' })
+  @Max(2030, { message: 'Nhỏ hơn 2030' })
   year: number;
 
   @Field()
   @IsNumber({}, { message: 'Vui lòng nhập kiểu số' })
   number: number;
 
+  @IsNotEmpty({ message: 'Vui lòng nhập giải đấu' })
   @IsObjectID('giải đấu')
   @Field()
   tournamentId: string;
@@ -41,8 +46,18 @@ export class UpdateSeasonInput {
   name: string;
 
   @Field()
+  description: string;
+
+  @Field()
+  @IsNumber({}, { message: 'Vui lòng nhập kiểu số' })
+  @Min(2010, { message: 'Lớn hơn 2010' })
+  @Max(2030, { message: 'Nhỏ hơn 2030' })
+  year: number;
+
+  @Field()
   number: number;
 
+  @IsNotEmpty({ message: 'Vui lòng nhập giải đấu' })
   @IsObjectID('giải đấu')
   @Field()
   tournamentId: string;

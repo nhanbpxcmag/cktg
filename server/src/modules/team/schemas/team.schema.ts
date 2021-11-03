@@ -1,16 +1,16 @@
-import { Region } from './../../region/schemas/region.schema';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Expose, Type } from 'class-transformer';
 import * as mongoose from 'mongoose';
 import { BaseModel } from '../../../common/model.schema';
+import { Region } from './../../region/schemas/region.schema';
 
-export type TournamentDocument = Tournament & Document;
+export type TeamDocument = Team & Document;
 
 @ObjectType()
 @Schema()
-export class Tournament extends BaseModel {
-  @Prop({ required: true, index: true })
+export class Team extends BaseModel {
+  @Prop({ required: true })
   @Field()
   @Expose()
   code: string;
@@ -23,12 +23,12 @@ export class Tournament extends BaseModel {
   @Prop()
   @Field()
   @Expose()
-  number: number;
+  description: string;
 
-  @Prop({ default: 0 })
+  @Prop()
   @Field()
   @Expose()
-  international: number;
+  number: number;
 
   @Prop({
     required: true,
@@ -42,4 +42,4 @@ export class Tournament extends BaseModel {
   region: Region;
 }
 
-export const TournamentSchema = SchemaFactory.createForClass(Tournament);
+export const TeamSchema = SchemaFactory.createForClass(Team);

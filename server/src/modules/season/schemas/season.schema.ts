@@ -10,7 +10,7 @@ export type SeasonDocument = Season & Document;
 @ObjectType()
 @Schema()
 export class Season extends BaseModel {
-  @Prop({ required: true, index: true })
+  @Prop({ required: true })
   @Field()
   @Expose()
   code: string;
@@ -19,6 +19,11 @@ export class Season extends BaseModel {
   @Field()
   @Expose()
   name: string;
+
+  @Prop()
+  @Field()
+  @Expose()
+  description: string;
 
   @Prop({ required: true })
   @Field()

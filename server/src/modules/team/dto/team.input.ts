@@ -1,8 +1,8 @@
-import { IsIn, IsNotEmpty, IsNumber, Matches } from 'class-validator';
-import { InputType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 import { IsObjectID } from 'src/shared/decorators/class-validator.decorator';
 @InputType()
-export class CreateTournamentInput {
+export class CreateTeamInput {
   @Field()
   @IsNotEmpty({ message: 'Vui lòng nhập Mã' })
   code: string;
@@ -12,13 +12,11 @@ export class CreateTournamentInput {
   name: string;
 
   @Field()
-  @IsNumber({}, { message: 'Vui lòng nhập kiểu số' })
-  number: number;
+  description: string;
 
   @Field()
   @IsNumber({}, { message: 'Vui lòng nhập kiểu số' })
-  @IsIn([0, 1], { message: 'Vui lòng nhập giá trị 0 hoặc 1' })
-  international: number;
+  number: number;
 
   @IsNotEmpty({ message: 'Vui lòng nhập khu vực' })
   @IsObjectID('khu vực')
@@ -27,7 +25,7 @@ export class CreateTournamentInput {
 }
 
 @InputType()
-export class UpdateTournamentInput {
+export class UpdateTeamInput {
   @Field()
   @IsNotEmpty({ message: 'Vui lòng nhập id' })
   @IsObjectID()
@@ -38,20 +36,17 @@ export class UpdateTournamentInput {
   code: string;
 
   @Field()
-  @IsNotEmpty({ message: 'Vui lòng nhập Tên khu vực' })
+  @IsNotEmpty({ message: 'Vui lòng nhập Tên' })
   name: string;
 
   @Field()
-  @IsNumber({}, { message: 'Vui lòng nhập kiểu số' })
+  description: string;
+
+  @Field()
   number: number;
 
-  @Field()
-  @IsNumber({}, { message: 'Vui lòng nhập kiểu số' })
-  @IsIn([0, 1], { message: 'Vui lòng nhập giá trị 0 hoặc 1' })
-  international: number;
-
-  @Field()
   @IsNotEmpty({ message: 'Vui lòng nhập khu vực' })
   @IsObjectID('khu vực')
+  @Field()
   regionId: string;
 }

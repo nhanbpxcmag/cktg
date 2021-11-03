@@ -55,7 +55,7 @@ export class TournamentService {
   }
 
   async validateCreate(tournament: CreateTournamentInput) {
-    const { code, name, number, regionId } = tournament;
+    const { code, name, number, international, regionId } = tournament;
     const errorMessage: IErrorMessage[] = [];
     const tournaments = await this.tournamentModel
       .findOne({ code })
@@ -96,7 +96,7 @@ export class TournamentService {
   }
 
   async create(tournament: CreateTournamentInput): Promise<Tournament> {
-    const { code, name, number, regionId } = tournament;
+    const { code, name, number, international, regionId } = tournament;
 
     await this.validateCreate(tournament);
 
@@ -104,6 +104,7 @@ export class TournamentService {
       code,
       name,
       number,
+      international,
       region: regionId,
     }).save();
 
@@ -170,7 +171,8 @@ export class TournamentService {
   async update(
     updateTournamentInput: UpdateTournamentInput,
   ): Promise<Tournament> {
-    const { _id, code, name, number, regionId } = updateTournamentInput;
+    const { _id, code, name, number, international, regionId } =
+      updateTournamentInput;
 
     const { existingTournament, cRegion } = await this.validateUpdate(
       updateTournamentInput,
@@ -179,6 +181,7 @@ export class TournamentService {
     existingTournament.code = code;
     existingTournament.name = name;
     existingTournament.number = number;
+    existingTournament.international = international;
     existingTournament.region = cRegion;
     existingTournament.save();
 

@@ -27,14 +27,6 @@ async function bootstrap() {
     module.hot.accept();
     module.hot.dispose(() => {
       app.close();
-      // const MongoClient = require('mongodb').MongoClient;
-      // const mongo = new MongoClient(config.mongodb.uri, {
-      //   useNewUrlParser: true,
-      //   useUnifiedTopology: true,
-      // });
-      // mongo.connect((err) => {
-      //   console.log('Connected to MongoDB server ...');
-      // });
     });
   }
 }

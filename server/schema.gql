@@ -19,7 +19,28 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type UserResponse {
+  _id: ID
+  createdAt: DateTime
+  updatedAt: DateTime
+  username: String
+  email: String
+  firstName: String
+  lastName: String
+  fullName: String
+  avatar: String
+  token: String!
+}
+
 type Permission {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+}
+
+type Region {
   _id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -35,33 +56,36 @@ type Role {
   name: String!
 }
 
-type UserResponse {
-  _id: ID
-  createdAt: DateTime
-  updatedAt: DateTime
-  username: String
-  email: String
-  firstName: String
-  lastName: String
-  fullName: String
-  avatar: String
-  token: String!
-}
-
-type Region {
-  _id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  code: String!
-  name: String!
-}
-
 type Tournament {
   _id: ID!
   createdAt: DateTime!
   updatedAt: DateTime!
   code: String!
   name: String!
+  number: Float!
+  international: Float!
+  region: Region
+}
+
+type Season {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+  description: String!
+  year: Float!
+  number: Float!
+  tournament: Tournament
+}
+
+type Team {
+  _id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  code: String!
+  name: String!
+  description: String!
   number: Float!
   region: Region
 }
@@ -72,6 +96,10 @@ type Query {
   region(_id: String!): Region!
   tournaments: [Tournament!]
   tournament(_id: String!): Tournament!
+  seasons: [Season!]
+  season(_id: String!): Season!
+  teams: [Team!]
+  team(_id: String!): Team!
 }
 
 type Mutation {
@@ -83,6 +111,12 @@ type Mutation {
   createTournament(createTournamentInput: CreateTournamentInput!): Tournament!
   updateTournament(updateTournamentInput: UpdateTournamentInput!): Tournament!
   deleteTournament(_id: String!): Boolean!
+  createSeason(createSeasonInput: CreateSeasonInput!): Season!
+  updateSeason(updateSeasonInput: UpdateSeasonInput!): Season!
+  deleteSeason(_id: String!): Boolean!
+  createTeam(createTeamInput: CreateTeamInput!): Team!
+  updateTeam(updateTeamInput: UpdateTeamInput!): Team!
+  deleteTeam(_id: String!): Boolean!
 }
 
 input CreateUserInput {
@@ -110,9 +144,10 @@ input UpdateRegionInput {
 }
 
 input CreateTournamentInput {
-  name: String!
   code: String!
+  name: String!
   number: Float!
+  international: Float!
   regionId: String!
 }
 
@@ -120,6 +155,43 @@ input UpdateTournamentInput {
   _id: String!
   code: String!
   name: String!
+  number: Float!
+  international: Float!
+  regionId: String!
+}
+
+input CreateSeasonInput {
+  code: String!
+  name: String!
+  description: String!
+  year: Float!
+  number: Float!
+  tournamentId: String!
+}
+
+input UpdateSeasonInput {
+  _id: String!
+  code: String!
+  name: String!
+  description: String!
+  year: Float!
+  number: Float!
+  tournamentId: String!
+}
+
+input CreateTeamInput {
+  code: String!
+  name: String!
+  description: String!
+  number: Float!
+  regionId: String!
+}
+
+input UpdateTeamInput {
+  _id: String!
+  code: String!
+  name: String!
+  description: String!
   number: Float!
   regionId: String!
 }

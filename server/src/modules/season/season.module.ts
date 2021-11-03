@@ -1,19 +1,18 @@
-import { TournamentModule } from './../tournament/tournament.module';
-import { TournamentSchema } from './../tournament/schemas/tournament.schema';
-import { MongooseModule } from '@nestjs/mongoose';
 import { Module } from '@nestjs/common';
-import { SeasonService } from './season.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { TournamentModule } from './../tournament/tournament.module';
+import { Season, SeasonSchema } from './schemas/season.schema';
 import { SeasonResolver } from './season.resolver';
-import { Tournament } from '../tournament/schemas/tournament.schema';
+import { SeasonService } from './season.service';
 
 @Module({
   imports: [
     MongooseModule.forFeatureAsync([
       {
-        name: Tournament.name,
+        name: Season.name,
         useFactory: () => {
-          const schema = TournamentSchema;
-          schema.index({ code: 1, year: 1, tournament: 1 }, { unique: true });
+          const schema = SeasonSchema;
+          schema.index({ code: 1 }, { unique: true });
           return schema;
         },
       },
